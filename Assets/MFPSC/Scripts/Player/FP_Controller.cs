@@ -19,6 +19,8 @@ public class FP_Controller : MonoBehaviour
     public float crouchHeight = 1.0F;
     public float pickUpDistance = 2.0f;
     public LayerMask pickUpLayerMask;
+    public float dropDistance = 5.0f;
+    public LayerMask dropLayerMask;
 
     public KeyCode crouchKey = KeyCode.LeftControl;
     public KeyCode runKey = KeyCode.LeftShift;
@@ -51,6 +53,7 @@ public class FP_Controller : MonoBehaviour
     private bool crouch = false;
     private bool jump = false;
     private bool run = false;
+    private bool isPickUp = false;
 
     private int antiBunnyHopFactor = 1;
 	private int jumpTimer;
@@ -210,25 +213,45 @@ public class FP_Controller : MonoBehaviour
                 }
             }
         }
+
+        if (isPickUp) {
+            Visualize();
+        }
     }
+
     public void PickUp() {
         if (interactable == null) {
-            Debug.Log(interactable);
-            if (Physics.Raycast(myTransform.position, Camera.main.transform.forward, out RaycastHit hit, pickUpDistance, pickUpLayerMask)) {
-                Debug.Log(hit.transform);
-                Debug.Log(hit.rigidbody);
+            if (Physics.Raycast(myTransform.position, Camera.main.transform.forward, out RaycastHit hit, dropDistance, pickUpLayerMask)) {
                 if (hit.transform.TryGetComponent(out Interactable interactable)) {
                     this.interactable = interactable;
+                    isPickUp = true;
                     interactable.PickUp(playerPickUp.playerPickUpPointTransform);
                 }
             } else {
                 Debug.Log(hit.transform + "tidak dapat");
             }
         } else {
-            interactable.Drop();
-            interactable = null;
+            if (interactable.Visual().canDrop) {
+                isPickUp = false;
+                interactable.Drop();
+                interactable = null;
+            }
         }
     }
+
+    Vector3 lastHitPoint = Vector3.zero;
+    public void Visualize() {
+        if(interactable != null) {
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, 999, dropLayerMask)) {
+                lastHitPoint = hit.point;
+                playerPickUp.Visualization(lastHitPoint, interactable.Visual());
+            } else {
+                playerPickUp.Visualization(lastHitPoint, interactable.Visual());
+            }
+            
+        }
+    }
+
     void OnControllerColliderHit (ControllerColliderHit hit) {
 		if (!IsGrounded () && landTimer == 1)
             PlaySound(footSteps.landSound, JumpLandSource);

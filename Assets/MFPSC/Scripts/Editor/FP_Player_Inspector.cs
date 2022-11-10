@@ -27,6 +27,8 @@ public class FP_Player_Inspector : Editor {
         fP_Controller.airControl = EditorGUILayout.Toggle("Air Control", fP_Controller.airControl);
         EditorGUILayout.PropertyField(this.serializedObject.FindProperty("pickUpDistance"));
         EditorGUILayout.PropertyField(this.serializedObject.FindProperty("pickUpLayerMask"));
+        EditorGUILayout.PropertyField(this.serializedObject.FindProperty("dropDistance"));
+        EditorGUILayout.PropertyField(this.serializedObject.FindProperty("dropLayerMask"));
 
         EditorGUILayout.BeginHorizontal();
 

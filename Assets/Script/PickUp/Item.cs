@@ -7,6 +7,7 @@ public class Item : MonoBehaviour, Interactable
     public float lerpSpeed = 100f;
     public float rotationLimit = 180f;
     public float rotationSnapDegree = 90f;
+    public ItemGhost itemGhost;
 
     private Vector3 newPosition;
     private Transform originParent;
@@ -30,7 +31,6 @@ public class Item : MonoBehaviour, Interactable
     void FixedUpdate()
     {
         if(pickUpPointTransform != null) {
-            //If you want to use Lerp for smoother movement, uncomment this
             newPosition = Vector3.Lerp(transform.position, pickUpPointTransform.position, Time.deltaTime * lerpSpeed);
             rb.MovePosition(newPosition);
         }
@@ -54,19 +54,30 @@ public class Item : MonoBehaviour, Interactable
 
     public void PickUp(Transform transform) {
         this.pickUpPointTransform = transform;
-        rb.useGravity = false;
+       // rb.useGravity = false;
+        rb.isKinematic = true;
         col.isTrigger = true;
         ItemUI.instance.SetActive(this);
         this.transform.parent = transform.parent;
     }
 
     public void Drop() {
-        this.pickUpPointTransform = null;
-        rb.useGravity = true;
-        col.isTrigger = false;
-        ItemUI.instance.Deactivate();
+        
+        //rb.useGravity = true;
+        if(itemGhost.canDrop) {
+            this.pickUpPointTransform = null;
+            transform.position = itemGhost.transform.position;
+            rb.isKinematic = false;
+            col.isTrigger = false;
+            itemGhost.UnFollow();
+            ItemUI.instance.Deactivate();
+            transform.SetParent(originParent);
+        }
 
-        transform.SetParent(originParent);
+    }
+
+    public ItemGhost Visual() {
+        return itemGhost;
     }
 
     public void Rotate(float rotationSpeed) {
@@ -83,6 +94,4 @@ public class Item : MonoBehaviour, Interactable
             transform.localEulerAngles = new Vector3(0, rotationSpeed * rotationLimit, 0);
         }
     }
-
-
 }

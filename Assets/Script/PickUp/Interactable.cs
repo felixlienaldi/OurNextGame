@@ -8,5 +8,6 @@ public interface Interactable
 
     public void Rotate(float rotationSpeed);
 
+    public ItemGhost Visual();
 
 }
