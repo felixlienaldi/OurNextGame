@@ -58,7 +58,7 @@ public class Item : MonoBehaviour, Interactable
         rb.isKinematic = true;
         col.isTrigger = true;
         ItemUI.instance.SetActive(this);
-        this.transform.parent = transform.parent;
+        //this.transform.parent = transform.parent;
     }
 
     public void Drop() {
@@ -71,7 +71,7 @@ public class Item : MonoBehaviour, Interactable
             col.isTrigger = false;
             itemGhost.UnFollow();
             ItemUI.instance.Deactivate();
-            transform.SetParent(originParent);
+           // transform.SetParent(originParent);
         }
 
     }
