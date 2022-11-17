@@ -6,5 +6,4 @@ public class QuestDatabase : MonoBehaviour
 {
     public Quest[] quest;
 
-
 }

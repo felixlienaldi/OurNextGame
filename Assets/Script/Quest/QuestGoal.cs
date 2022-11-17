@@ -12,18 +12,20 @@ public class QuestGoal
 
     public bool IsReached() => currentAmount >= requiredAmount;
     
-    public void AddProgress(int value, GoalType questType) {
+    public bool CheckProgress(int value, GoalType questType) {
         if(goalType == questType) {
-            currentAmount += requiredAmount;
+            currentAmount += value;
         }
 
+        if (IsReached()) {
+            return true;
+        }
 
-    }
-
-    public void Finished() { 
+        return false;
     }
 }
 
 public enum GoalType {
-
+    Kill,
+    Gathering,
 }

@@ -15,6 +15,7 @@ public class Dialogue_Manager : MonoBehaviour{
 
     [Header("Config")]
     [SerializeField] private float textSpeed;
+    [SerializeField] private AudioClip clip;
     
     [Header("Dialogue")]
     [SerializeField] private GameObject dialogueBoard;
@@ -71,6 +72,13 @@ public class Dialogue_Manager : MonoBehaviour{
             Debug.Log(isChoice);
             Next();
             //}
+        }
+
+        if (Input.GetKeyDown(KeyCode.A) && dialogues != null && !isChoice) {
+            if (!isDialogue) {
+                DialogueDatabase.instance.SelectDialogue(0);
+                TriggerDialogue();
+            }
         }
     }
 
@@ -169,6 +177,13 @@ public class Dialogue_Manager : MonoBehaviour{
         visibleCount = counter % (totalVisibleCharacter + 1);
 
         while (visibleCount < totalVisibleCharacter) {
+            if (textSpeed >= 0.05f) {
+                AudioSource.PlayClipAtPoint(clip, Vector3.zero);
+            } else {
+                if (visibleCount % 3 == 0) {
+                    AudioSource.PlayClipAtPoint(clip, Vector3.zero);
+                }
+            }
             visibleCount = counter % (totalVisibleCharacter + 1);
             dialogueText.maxVisibleCharacters = visibleCount;
             counter++;

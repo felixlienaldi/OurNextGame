@@ -6,5 +6,5 @@ public class QuestActive : MonoBehaviour
 {
     public List<Quest> quests;
 
-
+    //public void AddProgress(int )
 }
