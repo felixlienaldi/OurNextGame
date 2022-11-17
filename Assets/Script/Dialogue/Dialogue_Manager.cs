@@ -249,6 +249,7 @@ public class Dialogue_Manager : MonoBehaviour{
             //    spawnedChoice.dialogue.choice[i].onPicked.AddListener(index => actions[0]?.Invoke(index));
             //}
             spawnedChoice.choiceIndex = i;
+            spawnedChoice.nameChoice.text = activeDialogue.dialogue.choice[i].choiceName;
             if(spawnedChoice.dialogue.userDialogue.name == "") {
                 spawnedChoice.dialogue.userDialogue.name = activeDialogue.dialogue.userDialogue.name;
             }

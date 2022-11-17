@@ -283,7 +283,11 @@ MonoBehaviour:
   dialogue:
     sentences: []
     choice: []
+    choiceChoosen: 0
     choosenChoiceIndex: 0
     dialogueType: 0
-    userDialogue: {fileID: 0}
+    userDialogue:
+      name: 
+      userPotrait: {fileID: 0}
   choiceIndex: 0
+  nameChoice: {fileID: 349251801562993028}
