@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface Interactable 
+public interface Pickupable : Interactable
 {
     public void PickUp(Transform transform);
 

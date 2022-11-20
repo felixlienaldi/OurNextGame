@@ -27,7 +27,7 @@ public class Battle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartBattle();
+        //StartBattle();
     }
 
     // Update is called once per frame

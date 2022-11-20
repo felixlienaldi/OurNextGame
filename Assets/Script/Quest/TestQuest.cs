@@ -22,6 +22,10 @@ public class TestQuest : MonoBehaviour
     }
 
     public void AddProgress(int value, GoalType type) {
-       // questActive.AddProgress(value, type);
+        questActive.AddProgress(value, type);
+    }
+
+    public void Kill() {
+
     }
 }

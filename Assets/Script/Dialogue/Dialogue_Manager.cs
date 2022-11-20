@@ -52,7 +52,7 @@ public class Dialogue_Manager : MonoBehaviour{
 
     private Coroutine tempCoroutine;
     public List<Action<int>> actions = new List<Action<int>>();
-    private Dialogue_Scriptable activeDialogue => dialogues[currentIndex];
+    private Dialogue_Scriptable? activeDialogue => (dialogues.Count > 0) ? dialogues[currentIndex] : null;
     //=====================================================================
     //				MONOBEHAVIOUR METHOD 
     //=====================================================================
@@ -125,6 +125,7 @@ public class Dialogue_Manager : MonoBehaviour{
     }
 
     public void DisplayNextSentence() {
+        if (activeDialogue == null) return;
         dialogueNameText.text = activeDialogue.dialogue.userDialogue.name;
         if(imagePotrait != null) imagePotrait.sprite = activeDialogue.dialogue.userDialogue.userPotrait;
 

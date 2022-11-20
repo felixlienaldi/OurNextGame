@@ -7,7 +7,7 @@ public class ItemUI : MonoBehaviour
     public static ItemUI instance;
 
     public GameObject itemUI;
-    public Interactable activeItem;
+    public Pickupable activeItem;
 
     private void Awake() {
         instance = this;
@@ -18,7 +18,7 @@ public class ItemUI : MonoBehaviour
         activeItem.Rotate(rotationSpeed);
     }
 
-    public void SetActive(Interactable activeItem) {
+    public void SetActive(Pickupable activeItem) {
         this.activeItem = activeItem;
         itemUI.SetActive(true);
     }

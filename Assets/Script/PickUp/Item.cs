@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class Item : MonoBehaviour, Interactable
+public class Item : MonoBehaviour, Pickupable
 {
 
     public float lerpSpeed = 100f;
@@ -37,14 +37,15 @@ public class Item : MonoBehaviour, Interactable
 
         if (rotate) {
             if (rotateIndex == -1f) {
-                transform.localRotation = Quaternion.Slerp(transform.localRotation,  rotationEnd ,lerpSpeed * Time.deltaTime);
+                transform.localRotation = Quaternion.RotateTowards(transform.localRotation,  rotationEnd ,lerpSpeed * Time.deltaTime);
                 
-                if (Quaternion.Angle(transform.localRotation, rotationEnd) <= 0.1f) {
+                if (Quaternion.Angle(transform.localRotation, rotationEnd) <= 0f) {
                     rotate = false;
                 }
             } else {
-                transform.localRotation = Quaternion.Slerp(transform.localRotation, rotationEnd, lerpSpeed * Time.deltaTime);
-                if (Quaternion.Angle(transform.localRotation, rotationEnd) <= 0.1f) {
+                transform.localRotation = Quaternion.RotateTowards(transform.localRotation, rotationEnd, lerpSpeed * Time.deltaTime);
+
+                if (Quaternion.Angle(transform.localRotation, rotationEnd) <= 0f) {
                     rotate = false;
                 }
             }
@@ -84,14 +85,72 @@ public class Item : MonoBehaviour, Interactable
         if(rotationSpeed == -1f) {
             rotate = true;
             rotateIndex = rotationSpeed;
-
-            rotationEnd = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y - rotationSnapDegree, transform.localEulerAngles.z);
+            rotationEnd = Quaternion.Euler(transform.localEulerAngles.x, NegativeNearestQuadrant(transform.localEulerAngles.y), transform.localEulerAngles.z);
         } else if(rotationSpeed == 1f) {
             rotate = true;
             rotateIndex = rotationSpeed;
-            rotationEnd = Quaternion.Euler(transform.localEulerAngles.x, transform.localEulerAngles.y + rotationSnapDegree, transform.localEulerAngles.z);
+            rotationEnd = Quaternion.Euler(transform.localEulerAngles.x, PositiveNearestQuadrant(transform.localEulerAngles.y), transform.localEulerAngles.z);
         } else {
             transform.localEulerAngles = new Vector3(0, rotationSpeed * rotationLimit, 0);
         }
+
+
+        // 135 -> 180
+        // 134 -> 90
+    }
+
+    public float PositiveNearestQuadrant(float y) {
+        if (y >= 0) {
+            if(y < 90) {
+                return 90;
+            } else if(y < 180) {
+                return 180;
+            } else if (y < 270) {
+                return 270;
+            } else {
+                return 0;
+            }
+        } else {
+            if (y > -90) {
+                return -90;
+            } else if (y > -180) {
+                return -180;
+            } else if (y > -270) {
+                return -270;
+            } else {
+                return 0;
+            }
+        }
+    }
+
+    public float NegativeNearestQuadrant(float y) {
+        if (y >= 0) {
+            if(y == 0) {
+                return -90;
+            }else {
+                if (y <= 90) {
+                    return 0;
+                } else if (y <= 180) {
+                    return 90;
+                } else if (y <= 270) {
+                    return 180;
+                } else {
+                    return 270;
+                }
+            }
+        } else {
+            if (y >= -90) {
+                return 0;
+            } else if (y >= -180) {
+                return -90;
+            } else if (y >= -270) {
+                return -180;
+            } else {
+                return -270;
+            }
+        }
+    }
+
+    public void Interact() {
     }
 }

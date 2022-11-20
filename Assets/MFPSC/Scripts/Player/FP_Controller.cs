@@ -43,7 +43,7 @@ public class FP_Controller : MonoBehaviour
     private FP_Input playerInput;
     private FP_PickUp playerPickUp;
 	private RaycastHit hit;
-    private Interactable interactable;
+    private Pickupable interactable;
 
 
     private bool playerControl = false;
@@ -222,7 +222,7 @@ public class FP_Controller : MonoBehaviour
     public void PickUp() {
         if (interactable == null) {
             if (Physics.Raycast(myTransform.position, Camera.main.transform.forward, out RaycastHit hit, dropDistance, pickUpLayerMask)) {
-                if (hit.transform.TryGetComponent(out Interactable interactable)) {
+                if (hit.transform.TryGetComponent(out Pickupable interactable)) {
                     this.interactable = interactable;
                     isPickUp = true;
                     interactable.PickUp(playerPickUp.playerPickUpPointTransform);
