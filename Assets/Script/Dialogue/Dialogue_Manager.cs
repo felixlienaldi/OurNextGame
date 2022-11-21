@@ -224,6 +224,7 @@ public class Dialogue_Manager : MonoBehaviour{
         if (isEnemy) {
             StartCoroutine(SpawnEnemyChoice());
         } else {
+            if (activeDialogue == null) return;
             if (activeDialogue.dialogue.dialogueType == Dialogue.DialogueType.TextOnly || activeDialogue.dialogue.choiceChoosen) return;
             isChoice = true;
             choiceBoard.SetActive(true);

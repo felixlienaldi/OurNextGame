@@ -213,6 +213,16 @@ public class FP_Controller : MonoBehaviour
                 }
             }
         }
+        if (Physics.Raycast(myTransform.position, Camera.main.transform.forward, out RaycastHit hit, dropDistance, pickUpLayerMask)) {
+            if (hit.transform.TryGetComponent(out Pickupable interactable)) {
+                playerPickUp.pickUpButton.gameObject.SetActive(true);
+            } else {
+               
+            }
+        } else {
+            if (interactable == null)
+                playerPickUp.pickUpButton.gameObject.SetActive(false);
+        }
 
         if (isPickUp) {
             Visualize();
@@ -227,8 +237,6 @@ public class FP_Controller : MonoBehaviour
                     isPickUp = true;
                     interactable.PickUp(playerPickUp.playerPickUpPointTransform);
                 }
-            } else {
-                Debug.Log(hit.transform + "tidak dapat");
             }
         } else {
             if (interactable.Visual().canDrop) {
@@ -237,6 +245,14 @@ public class FP_Controller : MonoBehaviour
                 interactable = null;
             }
         }
+    }
+
+    public void Interact() {
+        if (Physics.Raycast(myTransform.position, Camera.main.transform.forward, out RaycastHit hit, dropDistance, pickUpLayerMask)) {
+            if (hit.transform.TryGetComponent(out Interactable interactables)) {
+                interactables.Interact();
+            }
+        } 
     }
 
     Vector3 lastHitPoint = Vector3.zero;

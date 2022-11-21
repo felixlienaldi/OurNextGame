@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Dialogue;
+
 public class Item : MonoBehaviour, Pickupable
 {
 
@@ -152,5 +154,10 @@ public class Item : MonoBehaviour, Pickupable
     }
 
     public void Interact() {
+        Dialogue dialogue = new Dialogue()
+           .Sentences(new string[] { "This is Item" })
+           .Type(DialogueType.TextOnly)
+           .UserDialogue("");
+        Dialogue_Manager.instance.TriggerOneTimeDialogue(dialogue);
     }
 }
