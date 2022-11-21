@@ -15,6 +15,7 @@ MonoBehaviour:
   dialogue:
     sentences:
     - Mau yang mana?
+    - Mau yang mana? yaudah
     choice:
     - choiceName: Satu
       onPicked:

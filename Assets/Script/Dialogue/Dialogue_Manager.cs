@@ -312,6 +312,7 @@ public class Dialogue_Manager : MonoBehaviour{
         isEnemy = false;
         isChoice = false;
         choiceBoard.SetActive(false);
+        Next();
     }
 
     public void Reset() {

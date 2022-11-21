@@ -19,6 +19,8 @@ public class FP_Controller : MonoBehaviour
     public float crouchHeight = 1.0F;
     public float pickUpDistance = 2.0f;
     public LayerMask pickUpLayerMask;
+
+    public LayerMask interactableLayerMask;
     public float dropDistance = 5.0f;
     public LayerMask dropLayerMask;
 
@@ -248,7 +250,7 @@ public class FP_Controller : MonoBehaviour
     }
 
     public void Interact() {
-        if (Physics.Raycast(myTransform.position, Camera.main.transform.forward, out RaycastHit hit, dropDistance, pickUpLayerMask)) {
+        if (Physics.Raycast(myTransform.position, Camera.main.transform.forward, out RaycastHit hit, dropDistance, interactableLayerMask)) {
             if (hit.transform.TryGetComponent(out Interactable interactables)) {
                 interactables.Interact();
             }
